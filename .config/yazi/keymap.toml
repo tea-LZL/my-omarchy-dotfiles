@@ -1,0 +1,26 @@
+[mgr]
+# ... other keymaps ...
+
+[[mgr.prepend_keymap]]
+on   = [ "|" ]
+run  = "shell \"bash\" --block --confirm"
+desc = "Open shell in current directory"
+
+
+[[mgr.prepend_keymap]]
+on   = [ "g", "p" ]
+run  = "cd ~/Pictures"
+desc = "Cd to ~/Pictures"
+
+
+[[mgr.prepend_keymap]]
+on   = [ "g", "r" ]
+run  = "cd ~/repos"
+desc = "Cd to ~/repos"
+
+[[mgr.prepend_keymap]]
+on   = [ "E" ]
+run  = "shell \"nvim .\" --block --confirm"
+desc = "Open current directory in neovim"
+
+
