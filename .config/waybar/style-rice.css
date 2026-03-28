@@ -1,0 +1,241 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * RICE THEME WAYBAR STYLE
+ * A visually appealing, minimalistic CSS for waybar inspired by Linux rice setups
+ * 
+ * Color Palette (Tokyo Night inspired):
+ * - Background: Transparent (#00000000)
+ * - Foreground: Soft white (#c0caf5)
+ * - Accent: Blue (#7aa2f7)
+ * - Active: Bright blue (#89b4fa)
+ * - Warning: Peach (#fab387)
+ * - Error: Red (#f38ba8)
+ * - Muted: Gray (#565f89)
+ * 
+ * Fonts: JetBrains Mono Nerd Font (monospace aesthetic)
+ * ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Import base theme variables from Omarchy */
+@import "../omarchy/current/theme/waybar.css";
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * BASE STYLING
+ * ═══════════════════════════════════════════════════════════════════════════════ */
+
+* {
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  font-family: "JetBrainsMono Nerd Font", "FiraCode Nerd Font", monospace;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+window#waybar {
+  /* Fully transparent background - blends with wallpaper */
+  background-color: rgba(0, 0, 0, 0.0);
+  color: #c0caf5;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * MODULE PADDING & SPACING
+ * ═══════════════════════════════════════════════════════════════════════════════ */
+
+#clock,
+#idle_inhibitor,
+#custom-update,
+#custom-voxtype,
+#custom-screenrecording-indicator,
+#workspaces,
+#tray,
+#bluetooth,
+#network,
+#pulseaudio,
+#cpu,
+#battery {
+  padding: 4px 10px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * CLOCK MODULE - Time display
+ * ═══════════════════════════════════════════════════════════════════════════════ */
+
+#clock {
+  color: #7aa2f7;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * WORKSPACES - Workspace indicators with smooth transitions
+ * ═══════════════════════════════════════════════════════════════════════════════ */
+
+#workspaces button {
+  all: initial;
+  padding: 4px 12px;
+  margin: 0 2px;
+  color: #565f89;
+  font-size: 16px;
+  
+  /* Subtle transition for smooth feel */
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+#workspaces button.active {
+  color: #7aa2f7;
+  /* Left border indicator - rice style */
+  box-shadow: inset 3px 0 0 0 #7aa2f7;
+  padding-left: 14px;
+}
+
+#workspaces button:not(.active) {
+  transition: all 0.2s ease-out;
+}
+
+#workspaces button:hover {
+  color: #89b4fa;
+}
+
+#workspaces button.empty {
+  opacity: 0.3;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * HOVER EFFECTS - Interactive feedback on mouse over
+ * ═══════════════════════════════════════════════════════════════════════════════ */
+
+#clock:hover,
+#battery:hover,
+#pulseaudio:hover,
+#network:hover,
+#bluetooth:hover,
+#cpu:hover,
+#tray:hover,
+#idle_inhibitor:hover {
+  /* Subtle background with transparency */
+  background-color: rgba(122, 162, 247, 0.15);
+  border-radius: 8px;
+  color: #89b4fa;
+  transition: all 0.15s ease-in-out;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * STATUS INDICATORS - Color coding for different states
+ * ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Recording indicators - Red accent */
+#custom-voxtype.recording,
+#custom-screenrecording-indicator.active {
+  color: #f38ba8;
+}
+
+/* Muted audio state */
+#pulseaudio.muted {
+  color: #565f89;
+}
+
+/* Battery charging state */
+#battery.charging {
+  color: #a6e3a1;
+}
+
+/* Battery warning/critical states */
+#battery.warning {
+  color: #fab387;
+}
+
+#battery.critical {
+  color: #f38ba8;
+  animation: blink 1s ease-in-out infinite;
+}
+
+/* Network disconnected state */
+#network.disconnected {
+  color: #f38ba8;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * KEYBOARD STATE - Caps lock indicator
+ * ═══════════════════════════════════════════════════════════════════════════════ */
+
+#keyboard-state {
+  color: #565f89;
+  font-size: 0px;
+}
+
+#keyboard-state .locked {
+  color: #7aa2f7;
+  font-size: 14px;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * TOOLTIPS - Hover information display
+ * ═══════════════════════════════════════════════════════════════════════════════ */
+
+tooltip {
+  background-color: rgba(30, 30, 46, 0.95);
+  color: #c0caf5;
+  border: 1px solid rgba(122, 162, 247, 0.3);
+  border-radius: 8px;
+  padding: 8px;
+}
+
+tooltip label {
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  padding: 4px 8px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * SYSTEM TRAY - Application icons
+ * ═══════════════════════════════════════════════════════════════════════════════ */
+
+#tray {
+  background-color: rgba(0, 0, 0, 0.0);
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: rgba(243, 139, 168, 0.2);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * ANIMATIONS
+ * ═══════════════════════════════════════════════════════════════════════════════ */
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Subtle pulse for active recording indicator */
+#custom-voxtype.recording,
+#custom-screenrecording-indicator.active {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+ * CUSTOM SCROLLBAR (for tooltips with content)
+ * ═══════════════════════════════════════════════════════════════════════════════ */
+
+tooltip scrollbar {
+  background-color: rgba(30, 30, 46, 0.5);
+}
+
+tooltip scrollbar slider {
+  background-color: #565f89;
+  border-radius: 4px;
+}
+
+tooltip scrollbar slider:hover {
+  background-color: #7aa2f7;
+}

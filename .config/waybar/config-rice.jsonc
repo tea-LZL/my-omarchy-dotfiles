@@ -1,0 +1,200 @@
+{
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // RICE THEME WAYBAR CONFIG
+  // A minimal, sleek configuration inspired by popular Linux rice setups
+  // ═══════════════════════════════════════════════════════════════════════════════
+
+  "reload_style_on_change": true,
+  "layer": "bottom",
+  "position": "top",
+  "spacing": 0,
+  "height": 30,
+
+  // Modules positioned on the left side of the bar
+  "modules-left": [
+    "hyprland/workspaces",
+    "idle_inhibitor",
+  ],
+
+  // Center modules - typically clock or window title
+  "modules-center": [
+    "clock",
+  ],
+
+  // Right side modules - system status indicators
+  "modules-right": [
+    "tray",
+    "pulseaudio",
+    "network",
+    "battery",
+    "clock",
+  ],
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // MODULE CONFIGURATIONS
+  // ═══════════════════════════════════════════════════════════════════════════════
+
+  // Hyprland Workspaces - shows active workspace indicators
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "on-scroll-up": "hyprctl dispatch workspace -1",
+    "on-scroll-down": "hyprctl dispatch workspace +1",
+    "format": "{icon}",
+    "format-icons": {
+      "default": "󰌑",
+      "active": "󰮯",
+    },
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": [],
+    },
+  },
+
+  // Clock Module - displays time with multiple format options
+  // Primary: HH:MM format, Alt: Full date on right-click
+  "clock": {
+    "format": "{:%H:%M}",
+    "format-alt": "{:%a %b %d}",
+    "tooltip": true,
+    "tooltip-format": "<tt><big>{calendar}</big></tt>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#89b4fa'><b>{}</b></span>",
+        "days": "<span color='#a6adc8'>{}</span>",
+        "weeks": "<span color='#74c7ec'>W{}</span>",
+        "weekdays": "<span color='#f5c2e7'><b>{}</b></span>",
+        "today": "<span color='#f38ba8'><b><u>{}</u></b></span>",
+      },
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_down",
+      "on-scroll-down": "shift_up",
+    },
+  },
+
+  // Network Module - shows WiFi/Ethernet status
+  "network": {
+    "format-icons": {
+      "wifi": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+      "ethernet": "󰈀",
+    },
+    "format": "{icon} {ifname}",
+    "format-wifi": "{signalStrength}%  {icon}",
+    "format-ethernet": "{icon}",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "on-click": "omarchy-launch-wifi",
+  },
+
+  // PulseAudio Module - volume control and indicator
+  "pulseaudio": {
+    "format": "{icon}",
+    "on-click": "omarchy-launch-audio",
+    "on-click-right": "pamixer -t",
+    "tooltip-format": "Playing at {volume}%",
+    "scroll-step": 5,
+    "format-muted": "󰝟",
+    "format-icons": {
+      "headphone": "󰋎",
+      "default": ["󰕿", "󰖀", "󰕴"],
+    },
+  },
+
+  // Battery Module - shows charging state and percentage
+  "battery": {
+    "format": "{capacity}% {icon}",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "󰂄 {capacity}%",
+    "format-alt": "{icon}",
+    "format-icons": {
+      "charging": ["󰢜", "󰢜", "󰂆", "󰂇", "󰂈", "󰂉", "󰢝", "󰂊", "󰂋", "󰂅"],
+      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    },
+    "on-click": "omarchy-menu power",
+  },
+
+  // Idle Inhibitor - prevents screen dimming when active
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󰅶",
+      "deactivated": "󰛊",
+    },
+  },
+
+  // System Tray - application icons
+  "tray": {
+    "icon-size": 14,
+    "spacing": 10,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // CUSTOM MODULES - Omarchy-specific indicators
+  // ═══════════════════════════════════════════════════════════════════════════════
+
+  // Update indicator - shows when system updates are available
+  "custom/update": {
+    "format": "󰚰",
+    "exec": "omarchy-update-available",
+    "on-click": "omarchy-launch-floating-terminal-with-presentation omarchy-update",
+    "return-type": "json",
+    "signal": 8,
+  },
+
+  // Voice type indicator - shows recording/transcribing state
+  "custom/voxtype": {
+    "exec": "omarchy-voxtype-status",
+    "return-type": "json",
+    "format": "{icon}",
+    "format-icons": {
+      "recording": "󰍬",
+      "transcribing": "󰔟",
+    },
+  },
+
+  // Screen recording indicator
+  "custom/screenrecording-indicator": {
+    "on-click": "omarchy-cmd-screenrecord",
+    "exec": "$OMARCHY_PATH/default/waybar/indicators/screen-recording.sh",
+    "return-type": "json",
+  },
+
+  // Keyboard state - shows caps lock status
+  "keyboard-state": {
+    "capslock": true,
+    "format": "{icon}",
+    "format-icons": {
+      "locked": "󰌹",
+      "unlocked": "",
+    },
+  },
+
+  // Bluetooth module
+  "bluetooth": {
+    "format": "󰂯",
+    "format-connected": "󰂱",
+    "format-off": "󰂲",
+    "format-disabled": "󰂲",
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "on-click": "omarchy-launch-bluetooth",
+  },
+
+  // CPU usage indicator
+  "cpu": {
+    "format": "󰍛",
+    "on-click": "omarchy-launch-or-focus-tui btop",
+  },
+}

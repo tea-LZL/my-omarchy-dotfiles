@@ -26,7 +26,7 @@ window#waybar {
 #idle_inhibitor,
 #custom-update,
 #custom-voxtype,
-#custom-screenrecording-indicator,
+
 #workspaces,
 #tray,
 #bluetooth,
@@ -60,6 +60,16 @@ window#waybar {
 
 /* Red Recording Indicator */
 #custom-voxtype.recording,
+#custom-screenrecording-indicator,
+#custom-idle-indicator,
+#custom-notification-silencing-indicator {
+  min-width: 12px;
+  margin-left: 5px;
+  margin-right: 0;
+  font-size: 10px;
+  padding-bottom: 1px;
+}
+
 #custom-screenrecording-indicator.active {
   color: #f38ba8;
 }
@@ -137,4 +147,9 @@ tooltip label {
 
 .hidden {
   opacity: 0;
+}
+
+#custom-idle-indicator.active,
+#custom-notification-silencing-indicator.active {
+  color: #a55555;
 }
